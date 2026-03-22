@@ -539,3 +539,18 @@ def start_scheduler():
 #     logs=[l for l in logs if l["alert_id"]==alert_id]
 
 #     return logs[::-1]
+
+
+
+
+
+# run scrapper
+from fastapi import FastAPI
+from scraper.scrapper import run_alert  # adjust path if needed
+
+app = FastAPI()
+
+@app.get("/run-script")
+def run_script():
+    result = run_alert()
+    return result
