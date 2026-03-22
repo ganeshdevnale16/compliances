@@ -1,8 +1,8 @@
 /* Container */
 .home-container {
+  height: calc(100vh - 60px);   /* SAME as dashboard */
+  overflow-y: auto;             /* Enable scroll */
   padding: 40px 30px;
-  min-height: 100%;
-  overflow-y: auto;
 
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
