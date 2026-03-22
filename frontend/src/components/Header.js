@@ -66,11 +66,6 @@ function Header() {
           <span>Dashboard</span>
         </Link>
 
-        <Link to="/entities">
-          <FaDatabase />
-          <span>Data Center</span>
-        </Link>
-
         <Link to="/alerts">
           <FaBell />
           <span>Alerts</span>
@@ -80,6 +75,13 @@ function Header() {
           <FaFileAlt />
           <span>Reports</span>
         </Link>
+    
+        <Link to="/entities">
+          <FaDatabase />
+          <span>Data Center</span>
+        </Link>
+
+        
         
 
       </nav>
