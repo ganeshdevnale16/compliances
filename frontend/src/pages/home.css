@@ -1,6 +1,15 @@
 /* Container */
 .home-container {
   padding: 40px 30px;
+  min-height: 100%;
+  overflow-y: auto;
+
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+}
+
+.home-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 
 /* HERO */
