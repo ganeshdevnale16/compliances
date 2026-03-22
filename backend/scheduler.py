@@ -7,7 +7,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 # ADD PROJECT ROOT TO PYTHON PATH
 # ----------------------------------
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 sys.path.append(BASE_DIR)
 
 # Now scraper import works
@@ -17,7 +18,8 @@ from scraper.alert import run_alert
 # FILE PATH
 # ----------------------------------
 
-DATA_DIR = os.path.join(BASE_DIR, "backend", "data")
+DATA_DIR = os.path.join(BASE_DIR, "data")
+
 ALERT_FILE = os.path.join(DATA_DIR, "alerts.json")
 
 scheduler = BackgroundScheduler()
