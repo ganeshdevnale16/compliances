@@ -1,15 +1,15 @@
 import { useState } from "react";
 
 function Entities() {
-  const [logs, setLogs] = useState("Click button to run script...");
+  const [logs, setLogs] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const runScript = async () => {
+  const runScraper = async () => {
     setLoading(true);
-    setLogs("Running script...");
+    setLogs("Running scraper...");
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/run-script");
+      const res = await fetch("http://127.0.0.1:8000/run-scraper");
       const data = await res.json();
 
       setLogs(JSON.stringify(data, null, 2));
@@ -23,13 +23,12 @@ function Entities() {
   return (
     <div>
       <h1>Entities</h1>
-      <p>This page will manage monitored vendors and clients.</p>
 
-      <button onClick={runScript} disabled={loading}>
+      <button onClick={runScraper} disabled={loading}>
         {loading ? "Running..." : "Run Scraper"}
       </button>
 
-      <pre style={{ marginTop: "20px", background: "#000", color: "#0f0", padding: "10px" }}>
+      <pre style={{ marginTop: "20px" }}>
         {logs}
       </pre>
     </div>
