@@ -642,8 +642,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 # OPENAI
 
-client = OpenAI(api_key="nana")
-
+client = OpenAI(api_key="kkk")
+kkk=m+n+0
 m=sk-proj-
 n=kAIKVbHEfTtx2Gz43GJiJ4u93yFcG56XKOR5mT2bV-ghaGa2bKxgNWdDgoKI17-CDk4frRYMUZT3BlbkFJrBINRwpWJTKM9FT_
 0=R6oXKL4MOYniXlbdUUgxirLCpbyjuUZhbAdOnpkxsIU4VvkYPUnETFKRwA
