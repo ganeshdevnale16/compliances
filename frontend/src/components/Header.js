@@ -41,8 +41,8 @@
 
 
 import { Link } from "react-router-dom";
-import { FaHome, FaChartBar, FaBuilding, FaBell, FaFileAlt, FaCogs, FaDatabase } from "react-icons/fa";
-
+import { FaHome, FaChartBar, FaBell, FaFileAlt, FaCogs, FaDatabase } from "react-icons/fa";
+ // FaBuilding,
 import "./header.css";
 
 function Header() {
