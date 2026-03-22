@@ -50,9 +50,9 @@ function Header() {
   return (
     <header className="main-header">
 
-      <div className="logo">
+      <Link to="/" className="logo">
         Legal Monitor
-      </div>
+      </Link>
 
       <nav className="nav-menu">
 
