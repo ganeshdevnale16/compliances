@@ -24,7 +24,8 @@ app.add_middleware(
 # -----------------------------
 
 # DATA_FILE = "../scraper/entity_match_results.xlsx"
-DATA_FILE = "../data/entity_match_results.xlsx"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
 # -----------------------------
@@ -99,7 +100,7 @@ def dashboard_data():
     import numpy as np
     import os
 
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(BASE_DIR, "data")
 
     file = os.path.join(DATA_DIR, "entity_match_results.xlsx")
@@ -244,7 +245,7 @@ class ReportRequest(BaseModel):
 @app.post("/download-report")
 def download_report(req: ReportRequest):
 
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(BASE_DIR, "data")
 
     file = os.path.join(DATA_DIR, "entity_match_results.xlsx")
