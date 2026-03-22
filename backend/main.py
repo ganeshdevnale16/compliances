@@ -544,13 +544,8 @@ def start_scheduler():
 
 
 
-# run scrapper
-from fastapi import FastAPI
-from scraper.scrapper import run_alert  # adjust path if needed
+from scraper.scrapper import run_scraper
 
-app = FastAPI()
-
-@app.get("/run-script")
-def run_script():
-    result = run_alert()
-    return result
+@app.get("/run-scraper")
+def run_scraper_api():
+    return run_scraper()
