@@ -397,7 +397,7 @@ m=sk-proj-
 n=kAIKVbHEfTtx2Gz43GJiJ4u93yFcG56XKOR5mT2bV-ghaGa2bKxgNWdDgoKI17-CDk4frRYMUZT3BlbkFJrBINRwpWJTKM9FT_
 0=R6oXKL4MOYniXlbdUUgxirLCpbyjuUZhbAdOnpkxsIU4VvkYPUnETFKRwA
 
-def run_alert(alert=None):
+def run_scraper():
 
     print("Starting scraper...")
 
@@ -588,10 +588,8 @@ def run_alert(alert=None):
         driver.quit()
         print("Browser closed")
 
-
 if __name__ == "__main__":
-    run_alert()
-
+    run_scraper()
 
 
 
