@@ -42,7 +42,7 @@
 
 import { Link } from "react-router-dom";
 import { FaHome, FaChartBar, FaBell, FaFileAlt, FaCogs, FaDatabase } from "react-icons/fa";
- // FaBuilding,
+
 import "./header.css";
 
 function Header() {
@@ -80,12 +80,6 @@ function Header() {
           <FaFileAlt />
           <span>Reports</span>
         </Link>
-
-        // <Link to="/automation">
-        //   <FaCogs />
-        //   <span>Automation</span>
-        // </Link>
-
         
 
       </nav>
