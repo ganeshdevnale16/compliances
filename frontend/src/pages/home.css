@@ -107,3 +107,9 @@
   margin: auto;
   line-height: 1.6;
 }
+
+
+.features {
+  border-top: 1px solid #eee;
+  padding-top: 30px;
+}
