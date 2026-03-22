@@ -66,8 +66,8 @@ function Header() {
         </Link>
 
         <Link to="/entities">
-          <FaBuilding />
-          <span>Entities</span>
+          <FaDatabase />
+          <span>Data Center</span>
         </Link>
 
         <Link to="/alerts">
@@ -80,10 +80,10 @@ function Header() {
           <span>Reports</span>
         </Link>
 
-        <Link to="/automation">
-          <FaCogs />
-          <span>Automation</span>
-        </Link>
+        // <Link to="/automation">
+        //   <FaCogs />
+        //   <span>Automation</span>
+        // </Link>
 
         
 
