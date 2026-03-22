@@ -20,13 +20,16 @@ function Home() {
             Go to Dashboard
           </button>
 
-          <button className="secondary" onClick={() => navigate("/alerts")}>
+          <button
+            className="secondary"
+            onClick={() => navigate("/alerts")}
+          >
             View Alerts
           </button>
         </div>
       </div>
 
-      {/* FEATURES SECTION */}
+      {/* FEATURES */}
       <div className="features">
 
         <div className="feature-card" onClick={() => navigate("/dashboard")}>
@@ -55,13 +58,49 @@ function Home() {
 
       </div>
 
-      {/* INFO SECTION */}
-      <div className="info-section">
+      {/* HOW IT WORKS */}
+      <div className="steps-section">
         <h2>How it works</h2>
-        <p>
-          This platform continuously monitors legal cases related to your entities,
-          identifies risks, and keeps you updated through alerts and reports.
-        </p>
+
+        <div className="steps">
+
+          <div className="step">
+            <span>1</span>
+            <h4>Add Entities</h4>
+            <p>Upload or manage vendors and clients in Data Center.</p>
+          </div>
+
+          <div className="step">
+            <span>2</span>
+            <h4>Monitor Cases</h4>
+            <p>System scans and identifies legal cases automatically.</p>
+          </div>
+
+          <div className="step">
+            <span>3</span>
+            <h4>Get Alerts</h4>
+            <p>Receive alerts for important case updates.</p>
+          </div>
+
+          <div className="step">
+            <span>4</span>
+            <h4>Download Reports</h4>
+            <p>Analyze data through downloadable reports.</p>
+          </div>
+
+        </div>
+      </div>
+
+      {/* WHY SECTION */}
+      <div className="why-section">
+        <h2>Why use this platform?</h2>
+
+        <div className="why-points">
+          <div>✔ Centralized case monitoring</div>
+          <div>✔ Automated alert system</div>
+          <div>✔ Easy report generation</div>
+          <div>✔ Scalable for multiple entities</div>
+        </div>
       </div>
 
     </div>
