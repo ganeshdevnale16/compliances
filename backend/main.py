@@ -26,7 +26,7 @@ app.add_middleware(
 # DATA_FILE = "../scraper/entity_match_results.xlsx"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
-
+DATA_FILE = os.path.join(DATA_DIR, "entity_match_results.xlsx")
 
 # -----------------------------
 # HOME API
