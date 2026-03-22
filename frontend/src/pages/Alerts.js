@@ -710,7 +710,7 @@ return () => window.removeEventListener("click", handleClick);
 // --------------------
 // ACTIONS
 // --------------------
-const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+// const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 const toggleAlert = async (id) => {
 await api.post(`/alerts/${id}/toggle`);
 loadAlerts();
