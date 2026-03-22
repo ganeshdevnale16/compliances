@@ -63,7 +63,7 @@ def get_cases():
 @app.post("/run-clean")
 def run_clean():
 
-    subprocess.run(["python", "../scraper/cleandata.py"])
+    subprocess.run(["python", "scraper/cleandata.py"])
 
     return {"status": "clean completed"}
 
@@ -71,7 +71,7 @@ def run_clean():
 @app.post("/run-compare")
 def run_compare():
 
-    subprocess.run(["python", "../scraper/compare.py"])
+    subprocess.run(["python", "scraper/compare.py"])
 
     return {"status": "entity matching completed"}
 
@@ -79,7 +79,7 @@ def run_compare():
 @app.post("/run-alert")
 def run_alert():
 
-    subprocess.run(["python", "../scraper/alert.py"])
+    subprocess.run(["python", "scraper/alert.py"])
 
     return {"status": "alerts sent"}
 
@@ -87,10 +87,10 @@ def run_alert():
 @app.post("/run-pipeline")
 def run_pipeline():
 
-    subprocess.run(["python", "../scraper/scrapper.py"])
-    subprocess.run(["python", "../scraper/cleandata.py"])
-    subprocess.run(["python", "../scraper/compare.py"])
-    subprocess.run(["python", "../scraper/alert.py"])
+    subprocess.run(["python", "scraper/scrapper.py"])
+    subprocess.run(["python", "scraper/cleandata.py"])
+    subprocess.run(["python", "scraper/compare.py"])
+    subprocess.run(["python", "scraper/alert.py"])
 
     return {"status": "pipeline completed"}
 @app.get("/dashboard")
