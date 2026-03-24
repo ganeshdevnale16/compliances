@@ -318,6 +318,10 @@ function DataCenter() {
         <h1>Data Center</h1>
       </div>
 
+      <div className="wip-banner">
+              🚧 Data Center is currently in progress. Core features are functional.
+            </div>
+
       {/* LIST */}
       <div className="alerts-list">
         {sources.map((src) => (
