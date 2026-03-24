@@ -13,7 +13,6 @@
 // }
 
 // export default Entities;
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./entities.css";
