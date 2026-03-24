@@ -117,10 +117,11 @@
 
 
 
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./Alerts.css";   // 🔥 reuse alerts styling
+import "./dataCenter.css";   // ✅ separate file
+
+const API_BASE = "https://compclean.onrender.com";
 
 function DataCenter() {
 
@@ -129,10 +130,11 @@ function DataCenter() {
 
   const fetchSources = async () => {
     try {
-      const res = await axios.get("https://compclean.onrender.com/data-sources");
-      setSources(res.data);
-    } catch (err) {
-      console.error("Error fetching sources:", err);
+      const res = await axios.get(`${API_BASE}/data-sources`);
+      setSources(Array.isArray(res.data) ? res.data : []);
+    } catch (error) {
+      console.error("Error fetching sources:", error);
+      setSources([]);
     }
   };
 
@@ -141,38 +143,30 @@ function DataCenter() {
   }, []);
 
   const toggleSource = async (id) => {
-    try {
-      await axios.post(`https://compclean.onrender.com/data-sources/${id}/toggle`);
-      fetchSources();
-    } catch (err) {
-      console.error(err);
-    }
+    await axios.post(`${API_BASE}/data-sources/${id}/toggle`);
+    fetchSources();
   };
 
   const runNow = async (id) => {
-    try {
-      await axios.post(`https://compclean.onrender.com/data-sources/${id}/run`);
-      alert("Scraper triggered!");
-      fetchSources();
-    } catch (err) {
-      console.error(err);
-    }
+    await axios.post(`${API_BASE}/data-sources/${id}/run`);
+    alert("Scraper triggered!");
+    fetchSources();
   };
 
   return (
-    <div className="alerts-list">
+    <div className="dc-container">
 
       {/* HEADER */}
-      <div className="header">
-        <h1>Data Center</h1>
+      <div className="dc-header">
+        Data Center
       </div>
 
-      {/* LIST */}
+      {/* CARDS */}
       {sources.map((src) => (
-        <div className="alert-row" key={src.id}>
+        <div className="dc-card" key={src.id}>
 
-          {/* LEFT ICON */}
-          <div className="left">
+          {/* LEFT IMAGE */}
+          <div className="dc-left">
             <img
               src="https://services.ecourts.gov.in/ecourtindia_v6/images/ecourts-logo.png"
               alt="logo"
@@ -180,27 +174,30 @@ function DataCenter() {
           </div>
 
           {/* MIDDLE */}
-          <div className="middle">
-            <div className="alert-name">
+          <div className="dc-middle">
+            <div className="dc-title">
               Source: {src.source_url}
             </div>
 
-            <div className="alert-meta">
+            <div className="dc-meta">
               Last Refresh: {src.last_run || "Not run yet"} | 
-              <span className={src.status === "active" ? "status-active" : "status-paused"}>
+              <span className={src.status === "active" ? "dc-active" : "dc-paused"}>
                 {" "}{src.status}
               </span>
             </div>
           </div>
 
-          {/* RIGHT (GEAR) */}
-          <div className="right">
-            <span onClick={() => setMenuOpen(menuOpen === src.id ? null : src.id)}>
+          {/* RIGHT (GEAR SAME AS ALERT) */}
+          <div className="dc-right">
+            <span
+              className="dc-gear"
+              onClick={() => setMenuOpen(menuOpen === src.id ? null : src.id)}
+            >
               ⚙️
             </span>
 
             {menuOpen === src.id && (
-              <div className="dropdown">
+              <div className="dc-dropdown">
                 <button onClick={() => toggleSource(src.id)}>
                   Pause / Resume
                 </button>
