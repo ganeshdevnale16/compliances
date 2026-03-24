@@ -103,124 +103,133 @@
 
 
 
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FiSettings } from "react-icons/fi";
+import { FaCog } from "react-icons/fa";   // ✅ SAME AS ALERTS
 import "./dataCenter.css";
 
 const API_BASE = "https://compclean.onrender.com";
 
 function DataCenter() {
   const [sources, setSources] = useState([]);
-  const [menuOpen, setMenuOpen] = useState(null);
-
-  // FETCH DATA
-  const fetchSources = async () => {
-    try {
-      const res = await axios.get(`${API_BASE}/data-sources`);
-      setSources(Array.isArray(res.data) ? res.data : []);
-    } catch (error) {
-      console.error("Error fetching sources:", error);
-      setSources([]);
-    }
-  };
+  const [activeMenu, setActiveMenu] = useState(null);
 
   useEffect(() => {
     fetchSources();
   }, []);
 
-  // TOGGLE ACTIVE / PAUSE
-  const toggleSource = async (id) => {
+  const fetchSources = async () => {
     try {
-      await axios.post(`${API_BASE}/data-sources/${id}/toggle`);
-      fetchSources();
+      const res = await axios.get(`${API_BASE}/data-sources`);
+      setSources(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
-      console.error("Toggle error:", err);
+      console.error(err);
+      setSources([]);
     }
   };
 
-  // RUN SCRAPER
-  const runNow = async (id, url) => {
-    try {
-      await axios.post(`${API_BASE}/data-sources/${id}/run`);
-      alert(`Scraper triggered for ${url}`);
-      fetchSources();
-    } catch (err) {
-      console.error("Run error:", err);
-    }
+  const toggleSource = async (id) => {
+    await axios.post(`${API_BASE}/data-sources/${id}/toggle`);
+    fetchSources();
+  };
+
+  const runNow = async (id) => {
+    await axios.post(`${API_BASE}/data-sources/${id}/run`);
+    alert("Scraper triggered!");
+    fetchSources();
   };
 
   return (
-    <div className="dc-container">
+    <div className="alerts-container">  {/* ✅ SAME CONTAINER */}
 
-      {/* HEADER */}
-      <div className="dc-header">
-        Data Center
+      {/* HEADER SAME AS ALERT */}
+      <div className="header1">
+        <div className="header-left">
+          <h1>Data Center</h1>
+        </div>
       </div>
 
-      {/* CARDS */}
-      {sources.map((src) => (
-        <div className="dc-card" key={src.id}>
+      {/* LIST SAME AS ALERT */}
+      <div className="alerts-list">
 
-          {/* LEFT ICON */}
-          <div className="dc-left">
-            <img
-              src="https://services.ecourts.gov.in/ecourtindia_v6/images/ecourts-logo.png"
-              alt="logo"
-            />
-          </div>
+        {sources.map((src) => (
+          <div className="alert-row" key={src.id}>
 
-          {/* MIDDLE CONTENT */}
-          <div className="dc-middle">
-            <div className="dc-title">
-              Source: {src.source_url}
+            {/* LEFT ICON */}
+            <div className="left">
+              <img
+                src="https://services.ecourts.gov.in/ecourtindia_v6/images/ecourts-logo.png"
+                alt="logo"
+                style={{ width: "40px" }}
+              />
             </div>
 
-            <div className="dc-meta">
-              <span>
-                <b>Last Refresh:</b>{" "}
-                {src.last_run ? src.last_run : "Not run yet"}
-              </span>
-
-              <span className={`dc-status ${src.status}`}>
-                {src.status}
-              </span>
-            </div>
-          </div>
-
-          {/* RIGHT MENU */}
-          <div className="dc-right">
-            <FiSettings
-              className="dc-gear"
-              onClick={() =>
-                setMenuOpen(menuOpen === src.id ? null : src.id)
-              }
-            />
-
-            {menuOpen === src.id && (
-              <div className="dc-dropdown">
-                <div onClick={() => toggleSource(src.id)}>
-                  {src.status === "active" ? "Pause" : "Resume"}
-                </div>
-
-                <div onClick={() => runNow(src.id, src.source_url)}>
-                  Run Now
-                </div>
+            {/* MIDDLE */}
+            <div className="middle">
+              <div className="alert-name">
+                {src.source_url}
               </div>
-            )}
-          </div>
 
-        </div>
-      ))}
+              <div className="alert-meta">
+                <span>
+                  {src.last_run || "Not run yet"}
+                </span>
+
+                <span> | </span>
+
+                <span className={
+                  src.status === "active"
+                    ? "status-active"
+                    : "status-paused"
+                }>
+                  {src.status}
+                </span>
+              </div>
+            </div>
+
+            {/* RIGHT */}
+            <div className="right">
+              <div
+                className="gear-container"
+                onClick={(e) => e.stopPropagation()}
+              >
+
+                <FaCog onClick={() =>
+                  setActiveMenu(activeMenu === src.id ? null : src.id)
+                } />
+
+                {activeMenu === src.id && (
+                  <div className="dropdown">
+
+                    <button onClick={() => toggleSource(src.id)}>
+                      {src.status === "active" ? "Pause" : "Resume"}
+                    </button>
+
+                    <button onClick={() => runNow(src.id)}>
+                      Run Now
+                    </button>
+
+                  </div>
+                )}
+
+              </div>
+            </div>
+
+          </div>
+        ))}
+
+      </div>
     </div>
   );
 }
 
 export default DataCenter;
+
+
+
+
+
+
+
+
+
