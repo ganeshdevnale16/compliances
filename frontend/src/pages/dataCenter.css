@@ -59,15 +59,17 @@
 }
 
 /* STATUS */
-.dc-active {
+
+.dc-status.active {
   color: #16a34a;
   font-weight: 600;
 }
 
-.dc-paused {
+.dc-status.paused {
   color: #dc2626;
   font-weight: 600;
 }
+
 
 /* RIGHT */
 .dc-right {
@@ -78,6 +80,11 @@
 .dc-gear {
   cursor: pointer;
   font-size: 18px;
+  color: #333;
+}
+
+.dc-gear:hover {
+  color: #000;
 }
 
 /* DROPDOWN (SAME AS ALERT) */
