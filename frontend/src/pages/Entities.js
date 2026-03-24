@@ -12,12 +12,115 @@
 //   );
 // }
 
-// export default Entities;
+// // export default Entities;
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import "./entities.css";
+
+// const API_BASE = "https://compclean.onrender.com";
+
+// function DataCenter() {
+
+//   const [sources, setSources] = useState([]);
+//   const [menuOpen, setMenuOpen] = useState(null);
+
+//   const fetchSources = async () => {
+//     try {
+//       const res = await axios.get(`${API_BASE}/data-sources`);
+//       console.log("API RESPONSE:", res.data);
+
+//       setSources(Array.isArray(res.data) ? res.data : []);
+//     } catch (error) {
+//       console.error("Error fetching sources:", error);
+//       setSources([]);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchSources();
+//   }, []);
+
+//   const toggleSource = async (id) => {
+//     await axios.post(`${API_BASE}/data-sources/${id}/toggle`);
+//     fetchSources();
+//   };
+
+//   const runNow = async (id) => {
+//     await axios.post(`${API_BASE}/data-sources/${id}/run`);
+//     alert("Scraper triggered!");
+//     fetchSources();
+//   };
+
+//   return (
+//     <div className="data-center">
+
+//       <h2>Data Center</h2>
+
+//       {sources.map(src => (
+//         <div className="data-card" key={src.id}>
+
+//           <div className="left">
+//           <img
+//             src="https://services.ecourts.gov.in/ecourtindia_v6/images/ecourts-logo.png"
+//             alt="logo"
+//           />
+//         </div>
+
+//           <div className="middle">
+//             <p><b>Source:</b> {src.source_url}</p>
+//             <p><b>Last Refresh:</b> {src.last_run || "Not run yet"}</p>
+//             <p>
+//               <b>Status:</b>
+//               <span className={src.status === "active" ? "active" : "paused"}>
+//                 {src.status}
+//               </span>
+//             </p>
+//           </div>
+
+//           <div className="right">
+//               <div className="gear" onClick={() => setMenuOpen(src.id)}>
+//                 ⚙️
+//               </div>
+            
+//               {menuOpen === src.id && (
+//                 <div className="menu">
+//                   <div onClick={() => toggleSource(src.id)}>Pause / Resume</div>
+//                   <div onClick={() => runNow(src.id)}>Run Now</div>
+//                 </div>
+//               )}
+//             </div>
+
+//         </div>
+//       ))}
+
+//     </div>
+//   );
+// }
+
+// export default DataCenter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./entities.css";
-
-const API_BASE = "https://compclean.onrender.com";
+import "./Alerts.css";   // 🔥 reuse alerts styling
 
 function DataCenter() {
 
@@ -26,13 +129,10 @@ function DataCenter() {
 
   const fetchSources = async () => {
     try {
-      const res = await axios.get(`${API_BASE}/data-sources`);
-      console.log("API RESPONSE:", res.data);
-
-      setSources(Array.isArray(res.data) ? res.data : []);
-    } catch (error) {
-      console.error("Error fetching sources:", error);
-      setSources([]);
+      const res = await axios.get("https://compclean.onrender.com/data-sources");
+      setSources(res.data);
+    } catch (err) {
+      console.error("Error fetching sources:", err);
     }
   };
 
@@ -41,54 +141,76 @@ function DataCenter() {
   }, []);
 
   const toggleSource = async (id) => {
-    await axios.post(`${API_BASE}/data-sources/${id}/toggle`);
-    fetchSources();
+    try {
+      await axios.post(`https://compclean.onrender.com/data-sources/${id}/toggle`);
+      fetchSources();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const runNow = async (id) => {
-    await axios.post(`${API_BASE}/data-sources/${id}/run`);
-    alert("Scraper triggered!");
-    fetchSources();
+    try {
+      await axios.post(`https://compclean.onrender.com/data-sources/${id}/run`);
+      alert("Scraper triggered!");
+      fetchSources();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
-    <div className="data-center">
+    <div className="alerts-list">
 
-      <h2>Data Center</h2>
+      {/* HEADER */}
+      <div className="header">
+        <h1>Data Center</h1>
+      </div>
 
-      {sources.map(src => (
-        <div className="data-card" key={src.id}>
+      {/* LIST */}
+      {sources.map((src) => (
+        <div className="alert-row" key={src.id}>
 
+          {/* LEFT ICON */}
           <div className="left">
-          <img
-            src="https://services.ecourts.gov.in/ecourtindia_v6/images/ecourts-logo.png"
-            alt="logo"
-          />
-        </div>
-
-          <div className="middle">
-            <p><b>Source:</b> {src.source_url}</p>
-            <p><b>Last Refresh:</b> {src.last_run || "Not run yet"}</p>
-            <p>
-              <b>Status:</b>
-              <span className={src.status === "active" ? "active" : "paused"}>
-                {src.status}
-              </span>
-            </p>
+            <img
+              src="https://services.ecourts.gov.in/ecourtindia_v6/images/ecourts-logo.png"
+              alt="logo"
+            />
           </div>
 
-          <div className="right">
-              <div className="gear" onClick={() => setMenuOpen(src.id)}>
-                ⚙️
-              </div>
-            
-              {menuOpen === src.id && (
-                <div className="menu">
-                  <div onClick={() => toggleSource(src.id)}>Pause / Resume</div>
-                  <div onClick={() => runNow(src.id)}>Run Now</div>
-                </div>
-              )}
+          {/* MIDDLE */}
+          <div className="middle">
+            <div className="alert-name">
+              Source: {src.source_url}
             </div>
+
+            <div className="alert-meta">
+              Last Refresh: {src.last_run || "Not run yet"} | 
+              <span className={src.status === "active" ? "status-active" : "status-paused"}>
+                {" "}{src.status}
+              </span>
+            </div>
+          </div>
+
+          {/* RIGHT (GEAR) */}
+          <div className="right">
+            <span onClick={() => setMenuOpen(menuOpen === src.id ? null : src.id)}>
+              ⚙️
+            </span>
+
+            {menuOpen === src.id && (
+              <div className="dropdown">
+                <button onClick={() => toggleSource(src.id)}>
+                  Pause / Resume
+                </button>
+
+                <button onClick={() => runNow(src.id)}>
+                  Run Now
+                </button>
+              </div>
+            )}
+          </div>
 
         </div>
       ))}
