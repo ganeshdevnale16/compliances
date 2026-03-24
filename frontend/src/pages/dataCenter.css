@@ -1,7 +1,15 @@
 /* ========================= */
 /* CONTAINER */
 /* ========================= */
-
+.wip-banner {
+  background: #fff3cd;
+  color: #856404;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border: 1px solid #ffeeba;
+}
 .alerts-container {
   padding: 20px;
   font-family: 'Inter', sans-serif;
