@@ -18,7 +18,7 @@
   align-items: center;
 
   background: #2f3e46;
-  padding: 20px 20px;
+  padding: 14px 20px;
   border-radius: 10px;
 
   margin-bottom: 20px;
@@ -87,6 +87,7 @@
 
 .middle {
   flex: 1;
+  margin-left: 12px;   /* 👈 ADD THIS */
 }
 
 /* TITLE */
