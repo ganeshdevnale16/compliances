@@ -14,10 +14,11 @@
 
 // export default Entities;
 
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./entities.css";
+
+const API_BASE = "https://compclean.onrender.com";
 
 function DataCenter() {
 
@@ -26,15 +27,13 @@ function DataCenter() {
 
   const fetchSources = async () => {
     try {
-      const res = await axios.get("/data-sources");
+      const res = await axios.get(`${API_BASE}/data-sources`);
+      console.log("API RESPONSE:", res.data);
 
-      console.log("API RESPONSE:", res.data); // DEBUG
-
-      // ✅ FIX: ensure array always
-      setSources(Array.isArray(res.data) ? res.data : res.data.data || []);
+      setSources(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching sources:", error);
-      setSources([]); // fallback
+      setSources([]);
     }
   };
 
@@ -43,12 +42,12 @@ function DataCenter() {
   }, []);
 
   const toggleSource = async (id) => {
-    await axios.post(`/data-sources/${id}/toggle`);
+    await axios.post(`${API_BASE}/data-sources/${id}/toggle`);
     fetchSources();
   };
 
   const runNow = async (id) => {
-    await axios.post(`/data-sources/${id}/run`);
+    await axios.post(`${API_BASE}/data-sources/${id}/run`);
     alert("Scraper triggered!");
     fetchSources();
   };
@@ -58,14 +57,10 @@ function DataCenter() {
 
       <h2>Data Center</h2>
 
-      {/* ✅ SAFE CHECK */}
-      {Array.isArray(sources) && sources.map(src => (
-
+      {sources.map(src => (
         <div className="data-card" key={src.id}>
 
-          <div className="left">
-            ⚖️
-          </div>
+          <div className="left">⚖️</div>
 
           <div className="middle">
             <p><b>Source:</b> {src.source_url}</p>
@@ -79,13 +74,7 @@ function DataCenter() {
           </div>
 
           <div className="right">
-
-            <div
-              className="gear"
-              onClick={() =>
-                setMenuOpen(menuOpen === src.id ? null : src.id) // ✅ toggle open/close
-              }
-            >
+            <div className="gear" onClick={() => setMenuOpen(src.id)}>
               ⚙️
             </div>
 
@@ -95,11 +84,9 @@ function DataCenter() {
                 <div onClick={() => runNow(src.id)}>Run Now</div>
               </div>
             )}
-
           </div>
 
         </div>
-
       ))}
 
     </div>
