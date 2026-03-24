@@ -51,7 +51,7 @@ function Header() {
     <header className="main-header">
 
       <Link to="/" className="logo">
-        Legal Monitor
+        Compliance Monitor
       </Link>
 
       <nav className="nav-menu">
