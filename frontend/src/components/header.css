@@ -1,4 +1,12 @@
 /* ===== MAIN HEADER ===== */
+.logo {
+  text-decoration: none;
+  color: white; /* keep your color */
+}
+.logo a {
+  text-decoration: none;
+  color: white;
+}
 .main-header {
   display: flex;
   justify-content: space-between;
