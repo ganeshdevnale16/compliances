@@ -2,46 +2,95 @@
   padding: 20px;
 }
 
+/* HEADER BAR */
+.data-center h2 {
+  background: #2f3e46;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* CARD */
 .data-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f3f3f3;
-  padding: 15px;
-  border-radius: 10px;
+
+  background: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+
+  padding: 20px;
   margin-bottom: 15px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* LEFT ICON */
+.left {
+  width: 80px;
+}
+
+.left img {
+  width: 60px;
+}
+
+/* MIDDLE TEXT */
+.middle {
+  flex: 1;
 }
 
 .middle p {
-  margin: 5px 0;
+  margin: 6px 0;
+  font-size: 15px;
 }
 
+/* STATUS COLORS */
 .active {
   color: green;
+  font-weight: 600;
 }
 
 .paused {
   color: red;
+  font-weight: 600;
 }
 
+/* RIGHT SIDE */
+.right {
+  position: relative;
+}
+
+/* GEAR ICON */
 .gear {
+  font-size: 22px;
   cursor: pointer;
-  font-size: 20px;
 }
 
+/* DROPDOWN MENU */
 .menu {
   position: absolute;
+  right: 0;
+  top: 35px;
+
   background: white;
   border: 1px solid #ccc;
-  padding: 10px;
   border-radius: 8px;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+
+  min-width: 140px;
+  z-index: 100;
 }
 
+/* MENU ITEMS */
 .menu div {
-  padding: 5px;
+  padding: 10px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .menu div:hover {
-  background: #eee;
+  background: #f1f1f1;
 }
