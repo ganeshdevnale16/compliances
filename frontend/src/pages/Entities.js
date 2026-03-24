@@ -318,7 +318,9 @@ function DataCenter() {
         <h1>Data Center</h1>
       </div>
 
-
+      <div className="wip-banner">
+              🚧 Data Center is currently in progress.🚧
+            </div>
 
       {/* LIST */}
       <div className="alerts-list">
@@ -352,9 +354,7 @@ function DataCenter() {
                 </span>
               </div>
             </div>
-      <div className="wip-banner">
-              🚧 Data Center is currently in progress.🚧
-            </div>
+
 
             {/* RIGHT */}
             <div className="right" ref={menuRef}>
