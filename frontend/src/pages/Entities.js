@@ -110,24 +110,18 @@
 
 
 
-
-
-
-
-import { FiSettings } from "react-icons/fi";
-
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./dataCenter.css";   // ✅ separate file
+import { FiSettings } from "react-icons/fi";
+import "./dataCenter.css";
 
 const API_BASE = "https://compclean.onrender.com";
 
 function DataCenter() {
-
   const [sources, setSources] = useState([]);
   const [menuOpen, setMenuOpen] = useState(null);
 
+  // FETCH DATA
   const fetchSources = async () => {
     try {
       const res = await axios.get(`${API_BASE}/data-sources`);
@@ -142,15 +136,25 @@ function DataCenter() {
     fetchSources();
   }, []);
 
+  // TOGGLE ACTIVE / PAUSE
   const toggleSource = async (id) => {
-    await axios.post(`${API_BASE}/data-sources/${id}/toggle`);
-    fetchSources();
+    try {
+      await axios.post(`${API_BASE}/data-sources/${id}/toggle`);
+      fetchSources();
+    } catch (err) {
+      console.error("Toggle error:", err);
+    }
   };
 
-  const runNow = async (id) => {
-    await axios.post(`${API_BASE}/data-sources/${id}/run`);
-    alert("Scraper triggered!");
-    fetchSources();
+  // RUN SCRAPER
+  const runNow = async (id, url) => {
+    try {
+      await axios.post(`${API_BASE}/data-sources/${id}/run`);
+      alert(`Scraper triggered for ${url}`);
+      fetchSources();
+    } catch (err) {
+      console.error("Run error:", err);
+    }
   };
 
   return (
@@ -165,7 +169,7 @@ function DataCenter() {
       {sources.map((src) => (
         <div className="dc-card" key={src.id}>
 
-          {/* LEFT IMAGE */}
+          {/* LEFT ICON */}
           <div className="dc-left">
             <img
               src="https://services.ecourts.gov.in/ecourtindia_v6/images/ecourts-logo.png"
@@ -173,45 +177,48 @@ function DataCenter() {
             />
           </div>
 
-          {/* MIDDLE */}
+          {/* MIDDLE CONTENT */}
           <div className="dc-middle">
             <div className="dc-title">
               Source: {src.source_url}
             </div>
 
             <div className="dc-meta">
-              Last Refresh: {src.last_run || "Not run yet"} | 
+              <span>
+                <b>Last Refresh:</b>{" "}
+                {src.last_run ? src.last_run : "Not run yet"}
+              </span>
+
               <span className={`dc-status ${src.status}`}>
-              {" "}{src.status}
-            </span>
+                {src.status}
+              </span>
             </div>
           </div>
 
-          {/* RIGHT (GEAR SAME AS ALERT) */}
+          {/* RIGHT MENU */}
           <div className="dc-right">
-            <span
-              <FiSettings
+            <FiSettings
               className="dc-gear"
-              onClick={() => setMenuOpen(menuOpen === src.id ? null : src.id)}
+              onClick={() =>
+                setMenuOpen(menuOpen === src.id ? null : src.id)
+              }
             />
-            </span>
 
             {menuOpen === src.id && (
               <div className="dc-dropdown">
-                <button onClick={() => toggleSource(src.id)}>
-              {src.status === "active" ? "Pause" : "Resume"}
-            </button>
+                <div onClick={() => toggleSource(src.id)}>
+                  {src.status === "active" ? "Pause" : "Resume"}
+                </div>
 
-                <button onClick={() => runNow(src.id)}>
+                <div onClick={() => runNow(src.id, src.source_url)}>
                   Run Now
-                </button>
+                </div>
               </div>
             )}
           </div>
 
         </div>
       ))}
-
     </div>
   );
 }
