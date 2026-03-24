@@ -78,17 +78,17 @@ function DataCenter() {
           </div>
 
           <div className="right">
-            <div className="gear" onClick={() => setMenuOpen(src.id)}>
-              ⚙️
-            </div>
-
-            {menuOpen === src.id && (
-              <div className="menu">
-                <div onClick={() => toggleSource(src.id)}>Pause / Resume</div>
-                <div onClick={() => runNow(src.id)}>Run Now</div>
+              <div className="gear" onClick={() => setMenuOpen(src.id)}>
+                ⚙️
               </div>
-            )}
-          </div>
+            
+              {menuOpen === src.id && (
+                <div className="menu">
+                  <div onClick={() => toggleSource(src.id)}>Pause / Resume</div>
+                  <div onClick={() => runNow(src.id)}>Run Now</div>
+                </div>
+              )}
+            </div>
 
         </div>
       ))}
