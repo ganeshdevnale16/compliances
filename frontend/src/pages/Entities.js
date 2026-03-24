@@ -15,8 +15,6 @@
 // export default Entities;
 
 
-
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./entities.css";
@@ -27,8 +25,17 @@ function DataCenter() {
   const [menuOpen, setMenuOpen] = useState(null);
 
   const fetchSources = async () => {
-    const res = await axios.get("/data-sources");
-    setSources(res.data);
+    try {
+      const res = await axios.get("/data-sources");
+
+      console.log("API RESPONSE:", res.data); // DEBUG
+
+      // ✅ FIX: ensure array always
+      setSources(Array.isArray(res.data) ? res.data : res.data.data || []);
+    } catch (error) {
+      console.error("Error fetching sources:", error);
+      setSources([]); // fallback
+    }
   };
 
   useEffect(() => {
@@ -46,13 +53,14 @@ function DataCenter() {
     fetchSources();
   };
 
-  
   return (
     <div className="data-center">
 
       <h2>Data Center</h2>
 
-      {sources.map(src => (
+      {/* ✅ SAFE CHECK */}
+      {Array.isArray(sources) && sources.map(src => (
+
         <div className="data-card" key={src.id}>
 
           <div className="left">
@@ -71,8 +79,13 @@ function DataCenter() {
           </div>
 
           <div className="right">
-            ⚙️
-            <div className="gear" onClick={() => setMenuOpen(src.id)}>
+
+            <div
+              className="gear"
+              onClick={() =>
+                setMenuOpen(menuOpen === src.id ? null : src.id) // ✅ toggle open/close
+              }
+            >
               ⚙️
             </div>
 
@@ -82,9 +95,11 @@ function DataCenter() {
                 <div onClick={() => runNow(src.id)}>Run Now</div>
               </div>
             )}
+
           </div>
 
         </div>
+
       ))}
 
     </div>
