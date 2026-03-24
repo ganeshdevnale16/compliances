@@ -1,11 +1,47 @@
-.entities-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 80px); /* adjust header height if needed */
+.data-center {
+  padding: 20px;
 }
 
-.entities-image {
-  max-width: 500px;
-  width: 100%;
+.data-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f3f3f3;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.middle p {
+  margin: 5px 0;
+}
+
+.active {
+  color: green;
+}
+
+.paused {
+  color: red;
+}
+
+.gear {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.menu {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.menu div {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.menu div:hover {
+  background: #eee;
 }
