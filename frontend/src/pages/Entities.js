@@ -59,7 +59,12 @@ function DataCenter() {
       {sources.map(src => (
         <div className="data-card" key={src.id}>
 
-          <div className="left">⚖️</div>
+          <div className="left">
+          <img
+            src="https://services.ecourts.gov.in/ecourtindia_v6/images/ecourts-logo.png"
+            alt="logo"
+          />
+        </div>
 
           <div className="middle">
             <p><b>Source:</b> {src.source_url}</p>
