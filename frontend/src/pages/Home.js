@@ -10,7 +10,7 @@ function Home() {
 
       {/* HERO SECTION */}
       <div className="hero">
-        <h1>Legal Monitoring Platform</h1>
+        <h1>Compliance Monitoring Platform</h1>
         <p>
           Monitor court cases, track risks, and manage alerts — all in one place.
         </p>
