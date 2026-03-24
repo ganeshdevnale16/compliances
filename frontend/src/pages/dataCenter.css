@@ -1,0 +1,114 @@
+/* PAGE */
+.dc-container {
+  padding: 20px;
+}
+
+/* HEADER (same as alerts style) */
+.dc-header {
+  background: #2f3e46;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* CARD */
+.dc-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;
+  border: 2px solid #d1cdcd7c;
+  border-radius: 12px;
+
+  padding: 18px;
+  margin-bottom: 12px;
+
+  transition: 0.2s;
+}
+
+/* HOVER LIKE ALERT */
+.dc-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+/* LEFT IMAGE */
+.dc-left img {
+  width: 60px;
+}
+
+/* MIDDLE */
+.dc-middle {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.dc-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.dc-meta {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* STATUS */
+.dc-active {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.dc-paused {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* RIGHT */
+.dc-right {
+  position: relative;
+}
+
+/* GEAR */
+.dc-gear {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* DROPDOWN (SAME AS ALERT) */
+.dc-dropdown {
+  position: absolute;
+  right: 0;
+  top: 35px;
+
+  background: #fff;
+  border-radius: 10px;
+  min-width: 140px;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  padding: 6px 0;
+
+  z-index: 999;
+}
+
+/* BUTTONS */
+.dc-dropdown button {
+  width: 100%;
+  padding: 10px 14px;
+
+  background: none;
+  border: none;
+  text-align: left;
+
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dc-dropdown button:hover {
+  background: #f3f4f6;
+}
