@@ -19,7 +19,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./dataCenter.css";
+import "./entities.css";
 
 function DataCenter() {
 
