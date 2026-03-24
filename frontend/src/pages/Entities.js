@@ -114,7 +114,7 @@
 
 
 
-
+import { FiSettings } from "react-icons/fi";
 
 
 import { useEffect, useState } from "react";
@@ -181,26 +181,26 @@ function DataCenter() {
 
             <div className="dc-meta">
               Last Refresh: {src.last_run || "Not run yet"} | 
-              <span className={src.status === "active" ? "dc-active" : "dc-paused"}>
-                {" "}{src.status}
-              </span>
+              <span className={`dc-status ${src.status}`}>
+              {" "}{src.status}
+            </span>
             </div>
           </div>
 
           {/* RIGHT (GEAR SAME AS ALERT) */}
           <div className="dc-right">
             <span
+              <FiSettings
               className="dc-gear"
               onClick={() => setMenuOpen(menuOpen === src.id ? null : src.id)}
-            >
-              ⚙️
+            />
             </span>
 
             {menuOpen === src.id && (
               <div className="dc-dropdown">
                 <button onClick={() => toggleSource(src.id)}>
-                  Pause / Resume
-                </button>
+              {src.status === "active" ? "Pause" : "Resume"}
+            </button>
 
                 <button onClick={() => runNow(src.id)}>
                   Run Now
