@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 function Logs() {
 const [logs, setLogs] = useState([]);
 
-// 🔥 Poll logs every 1 sec
+
 useEffect(() => {
 const interval = setInterval(() => {
 fetch("https://compclean.onrender.com/logs")
@@ -14,9 +14,9 @@ setLogs(data.logs);
 .catch(err => console.error(err));
 }, 1000);
 
-```
+
 return () => clearInterval(interval);
-```
+
 
 }, []);
 
@@ -31,7 +31,7 @@ box.scrollTop = box.scrollHeight;
 return (
 <div style={{ padding: "20px" }}> <h2>Live Scraper Logs</h2>
 
-```
+
   <div
     id="logBox"
     style={{
@@ -53,7 +53,7 @@ return (
     )}
   </div>
 </div>
-```
+
 
 );
 }
