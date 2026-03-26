@@ -67,6 +67,8 @@ import Entities from "./pages/Entities";
 import Alerts from "./pages/Alerts";
 import Reports from "./pages/Reports";
 import Automation from "./pages/Automation";
+import Logs from "./pages/Logs";
+
 
 import "./App.css";
 
@@ -83,6 +85,7 @@ function App() {
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/automation" element={<Automation />} />
+          <Route path="/logs" element={<Logs />} />
         </Routes>
       </div>
     </BrowserRouter>
