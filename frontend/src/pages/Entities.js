@@ -318,9 +318,10 @@ function DataCenter() {
         <h1>Data Center</h1>
       </div>
 
-      // <div className="wip-banner">
-      //         🚧 Data Center is currently in progress.🚧
-      //       </div>
+      {/*
+      <div className="wip-banner">
+      🚧 Data Center is currently in progress.🚧
+      </div> */}
 
       {/* LIST */}
       <div className="alerts-list">
