@@ -238,7 +238,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-// import { FaCog } from "react-icons/fa";
+import { FaCog } from "react-icons/fa";
 import "./dataCenter.css";
 
 const API_BASE = "https://compclean.onrender.com";
