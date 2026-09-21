@@ -266,7 +266,14 @@
 
 
 
-import { useEffect, useMemo, useState } from "react";
+
+
+
+
+
+
+
+import { useEffect, useState } from "react";
 import api from "../api";
 import "./dashboard.css";
 import FilterDropdown from "./FilterDropdown";
@@ -329,7 +336,7 @@ function Dashboard() {
   const [vesselTypeFilter, setVesselTypeFilter] = useState([]);
 
   // =====================================================
-  // LOAD DASHBOARD DATA
+  // LOAD DATA
   // =====================================================
 
   useEffect(() => {
@@ -459,123 +466,105 @@ function Dashboard() {
   // FILTER eCOURTS
   // =====================================================
 
-  const filteredCases = useMemo(() => {
+  const filteredCases = cases.filter(c => {
 
-    return cases.filter(c => {
+    const caseDate = c.registration_date
+      ? new Date(c.registration_date)
+      : null;
 
-      const caseDate = c.registration_date
-        ? new Date(c.registration_date)
-        : null;
+    let matchesFromDate = true;
+    let matchesToDate = true;
 
-      let matchesFromDate = true;
-      let matchesToDate = true;
+    if (fromDate) {
 
-      if (fromDate) {
+      const from =
+        new Date(`${fromDate}T00:00:00`);
 
-        const from = new Date(`${fromDate}T00:00:00`);
+      matchesFromDate =
+        caseDate &&
+        caseDate >= from;
+    }
 
-        matchesFromDate =
-          caseDate &&
-          caseDate >= from;
-      }
+    if (toDate) {
 
-      if (toDate) {
+      const to =
+        new Date(`${toDate}T23:59:59`);
 
-        const to = new Date(`${toDate}T23:59:59`);
+      matchesToDate =
+        caseDate &&
+        caseDate <= to;
+    }
 
-        matchesToDate =
-          caseDate &&
-          caseDate <= to;
-      }
+    return (
 
-      return (
+      (
+        entityFilter.length === 0 ||
+        entityFilter.includes(c["Entity Name"])
+      )
 
-        (
-          entityFilter.length === 0 ||
-          entityFilter.includes(c["Entity Name"])
-        )
+      &&
 
-        &&
+      (
+        stateFilter.length === 0 ||
+        stateFilter.includes(c.state)
+      )
 
-        (
-          stateFilter.length === 0 ||
-          stateFilter.includes(c.state)
-        )
+      &&
 
-        &&
+      (
+        statusFilter.length === 0 ||
+        statusFilter.includes(c.case_status)
+      )
 
-        (
-          statusFilter.length === 0 ||
-          statusFilter.includes(c.case_status)
-        )
+      &&
 
-        &&
+      matchesFromDate
 
-        matchesFromDate
+      &&
 
-        &&
+      matchesToDate
 
-        matchesToDate
-      );
+    );
 
-    });
-
-  }, [
-    cases,
-    entityFilter,
-    stateFilter,
-    statusFilter,
-    fromDate,
-    toDate
-  ]);
+  });
 
   // =====================================================
   // FILTER OFAC
   // =====================================================
 
-  const filteredSanctions = useMemo(() => {
+  const filteredSanctions = sanctions.filter(s => {
 
-    return sanctions.filter(s => {
+    return (
 
-      return (
+      (
+        typeFilter.length === 0 ||
+        typeFilter.includes(s.Type)
+      )
 
-        (
-          typeFilter.length === 0 ||
-          typeFilter.includes(s.Type)
-        )
+      &&
 
-        &&
+      (
+        programFilter.length === 0 ||
+        programFilter.includes(s.Program)
+      )
 
-        (
-          programFilter.length === 0 ||
-          programFilter.includes(s.Program)
-        )
+      &&
 
-        &&
+      (
+        regionFilter.length === 0 ||
+        regionFilter.includes(s.Region)
+      )
 
-        (
-          regionFilter.length === 0 ||
-          regionFilter.includes(s.Region)
-        )
+      &&
 
-        &&
+      (
+        vesselTypeFilter.length === 0 ||
+        vesselTypeFilter.includes(s["Vessel Type"])
+      )
 
-        (
-          vesselTypeFilter.length === 0 ||
-          vesselTypeFilter.includes(s["Vessel Type"])
-        )
+    );
 
-      );
-
-    });
-
-  }, [
-    sanctions,
-    typeFilter,
-    programFilter,
-    regionFilter,
-    vesselTypeFilter
-  ]);
+  });
 
   // =====================================================
   // eCOURTS KPI
@@ -649,6 +638,30 @@ function Dashboard() {
   };
 
   // =====================================================
+  // ALL SOURCE KPI
+  // =====================================================
+
+  const allSourceKpi = {
+
+    totalRecords:
+      filteredCases.length +
+      filteredSanctions.length,
+
+    ecourtsRecords:
+      filteredCases.length,
+
+    ofacRecords:
+      filteredSanctions.length,
+
+    ecourtsEntities:
+      ecourtsKpi.entities,
+
+    ofacVessels:
+      ofacKpi.vessels
+
+  };
+
+  // =====================================================
   // eCOURTS GROUP DATA
   // =====================================================
 
@@ -692,11 +705,11 @@ function Dashboard() {
 
   filteredCases.forEach(c => {
 
-    const date =
+    const registrationDate =
       c.registration_date || "";
 
     const month =
-      String(date).slice(0, 7);
+      String(registrationDate).slice(0, 7);
 
     if (!month) return;
 
@@ -761,44 +774,23 @@ function Dashboard() {
     groupSanctionData("Vessel Type");
 
   // =====================================================
-  // ALL SOURCE KPI
-  // =====================================================
-
-  const allSourceKpi = {
-
-    totalRecords:
-      filteredCases.length +
-      filteredSanctions.length,
-
-    ecourtsRecords:
-      filteredCases.length,
-
-    ofacRecords:
-      filteredSanctions.length,
-
-    ecourtsEntities:
-      ecourtsKpi.entities,
-
-    ofacVessels:
-      ofacKpi.vessels
-
-  };
-
-  // =====================================================
-  // SOURCE SELECTOR
+  // SOURCE CHANGE
   // =====================================================
 
   const handleSourceChange = (value) => {
 
     setSourceFilter(value);
 
-    // Clear filters when switching source
+    // Clear eCourts filters
+
     setEntityFilter([]);
     setStateFilter([]);
     setStatusFilter([]);
 
     setFromDate("");
     setToDate("");
+
+    // Clear OFAC filters
 
     setTypeFilter([]);
     setProgramFilter([]);
@@ -841,10 +833,12 @@ function Dashboard() {
 
 
       {/* =================================================
-          SOURCE FILTER
+          SOURCE + FILTERS
       ================================================= */}
 
       <div className="filters">
+
+        {/* SOURCE */}
 
         <div className="filter-box">
 
@@ -993,6 +987,8 @@ function Dashboard() {
 
         <>
 
+          {/* ALL SOURCE KPI */}
+
           <div className="kpi-grid">
 
             {[
@@ -1043,7 +1039,7 @@ function Dashboard() {
           </div>
 
 
-          {/* ALL SOURCE SUMMARY */}
+          {/* SOURCE CHARTS */}
 
           <div className="charts">
 
@@ -1168,7 +1164,7 @@ function Dashboard() {
 
 
       {/* =================================================
-          eCOURTS DASHBOARD
+          eCOURTS
       ================================================= */}
 
       {sourceFilter === "ecourts" && (
@@ -1222,7 +1218,7 @@ function Dashboard() {
           </div>
 
 
-          {/* CHARTS */}
+          {/* eCOURTS CHART ROW 1 */}
 
           <div className="charts">
 
@@ -1321,6 +1317,8 @@ function Dashboard() {
           </div>
 
 
+          {/* eCOURTS CHART ROW 2 */}
+
           <div className="charts">
 
             <div className="chart">
@@ -1411,7 +1409,7 @@ function Dashboard() {
           </div>
 
 
-          {/* CASE TABLE */}
+          {/* eCOURTS TABLE */}
 
           <h2 className="table-title">
             Case Details
@@ -1455,48 +1453,67 @@ function Dashboard() {
 
               <tbody>
 
-                {filteredCases.map(
-                  (c, i) => (
+                {filteredCases.length > 0 ? (
 
-                    <tr key={i}>
+                  filteredCases.map(
+                    (c, i) => (
 
-                      <td>
-                        {c.case_number}
-                      </td>
+                      <tr key={i}>
 
-                      <td>
-                        {c["Entity Name"]}
-                      </td>
+                        <td>
+                          {c.case_number}
+                        </td>
 
-                      <td>
-                        {c.court}
-                      </td>
+                        <td>
+                          {c["Entity Name"]}
+                        </td>
 
-                      <td>
-                        {c.state}
-                      </td>
+                        <td>
+                          {c.court}
+                        </td>
 
-                      <td>
-                        {c.case_status}
-                      </td>
+                        <td>
+                          {c.state}
+                        </td>
 
-                      <td
-                        className={
-                          Number(
+                        <td>
+                          {c.case_status}
+                        </td>
+
+                        <td
+                          className={
+                            Number(
+                              c.litigation_risk_score
+                            ) >= 7
+                              ? "risk-high"
+                              : "risk-low"
+                          }
+                        >
+                          {
                             c.litigation_risk_score
-                          ) >= 7
-                            ? "risk-high"
-                            : "risk-low"
-                        }
-                      >
-                        {
-                          c.litigation_risk_score
-                        }
-                      </td>
+                          }
+                        </td>
 
-                    </tr>
+                      </tr>
 
+                    )
                   )
+
+                ) : (
+
+                  <tr>
+
+                    <td
+                      colSpan="6"
+                      style={{
+                        textAlign: "center"
+                      }}
+                    >
+                      No records found
+                    </td>
+
+                  </tr>
+
                 )}
 
               </tbody>
@@ -1511,7 +1528,7 @@ function Dashboard() {
 
 
       {/* =================================================
-          OFAC DASHBOARD
+          OFAC / TREASURY
       ================================================= */}
 
       {sourceFilter === "ofac" && (
@@ -1808,46 +1825,69 @@ function Dashboard() {
 
               <tbody>
 
-                {filteredSanctions.map(
-                  (s, i) => (
+                {filteredSanctions.length > 0 ? (
 
-                    <tr key={i}>
+                  filteredSanctions.map(
+                    (s, i) => (
 
-                      <td>
-                        {s["Sr No"]}
-                      </td>
+                      <tr key={i}>
 
-                      <td>
-                        {s.Name}
-                      </td>
+                        <td>
+                          {s["Sr No"]}
+                        </td>
 
-                      <td>
-                        {s.Type}
-                      </td>
+                        <td>
+                          {s.Name}
+                        </td>
 
-                      <td>
-                        {s.Program}
-                      </td>
+                        <td>
+                          {s.Type}
+                        </td>
 
-                      <td>
-                        {s["Vessel Type"] === "-0-"
-                          ? "-"
-                          : s["Vessel Type"]}
-                      </td>
+                        <td>
+                          {s.Program}
+                        </td>
 
-                      <td>
-                        {s.Region === "-0-"
-                          ? "-"
-                          : s.Region}
-                      </td>
+                        <td>
+                          {
+                            s["Vessel Type"] === "-0-"
+                              ? "-"
+                              : s["Vessel Type"]
+                          }
+                        </td>
 
-                      <td>
-                        {s.Additional}
-                      </td>
+                        <td>
+                          {
+                            s.Region === "-0-"
+                              ? "-"
+                              : s.Region
+                          }
+                        </td>
 
-                    </tr>
+                        <td>
+                          {s.Additional}
+                        </td>
 
+                      </tr>
+
+                    )
                   )
+
+                ) : (
+
+                  <tr>
+
+                    <td
+                      colSpan="7"
+                      style={{
+                        textAlign: "center"
+                      }}
+                    >
+                      No sanction records found
+                    </td>
+
+                  </tr>
+
                 )}
 
               </tbody>
@@ -1863,7 +1903,8 @@ function Dashboard() {
     </div>
 
   );
-
 }
 
 export default Dashboard;
+
+
