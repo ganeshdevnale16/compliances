@@ -518,13 +518,13 @@ function DataCenter() {
     if (src.id === 2) {
       return {
         name: "U.S. Sanction (OFAC/Treasury)",
-        logo: "/ofac-logo.png",
+        logo: "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Seal_of_the_United_States_Department_of_the_Treasury.svg/1280px-Seal_of_the_United_States_Department_of_the_Treasury.svg.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail",
       };
     }
 
     return {
       name: src.name || "Data Source",
-      logo: "/ofac-logo.png",
+      logo: "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Seal_of_the_United_States_Department_of_the_Treasury.svg/1280px-Seal_of_the_United_States_Department_of_the_Treasury.svg.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail",
     };
   };
 
